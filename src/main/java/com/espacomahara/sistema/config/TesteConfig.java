@@ -8,10 +8,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.espacomahara.sistema.entities.ItemDePedido;
 import com.espacomahara.sistema.entities.Pedido;
 import com.espacomahara.sistema.entities.Produto;
 import com.espacomahara.sistema.entities.Usuario;
 import com.espacomahara.sistema.entities.enums.FormaPagamento;
+import com.espacomahara.sistema.repositories.ItemDePedidoRepository;
 import com.espacomahara.sistema.repositories.PedidoRepository;
 import com.espacomahara.sistema.repositories.ProdutoRepository;
 import com.espacomahara.sistema.repositories.UsuarioRepository;
@@ -28,6 +30,9 @@ public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private ItemDePedidoRepository itemDePedidoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -46,5 +51,11 @@ public class TesteConfig implements CommandLineRunner {
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2, ped3));
+		
+		ItemDePedido ip1 = new ItemDePedido(ped1, pro2, 2, pro2.getPreco());
+		ItemDePedido ip2 = new ItemDePedido(ped2, pro1, 1, pro1.getPreco());
+		ItemDePedido ip3 = new ItemDePedido(ped3, pro2, 3, pro2.getPreco());
+		
+		itemDePedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }

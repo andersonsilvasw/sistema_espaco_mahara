@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.espacomahara.sistema.entities.pk.ItemDePedidoPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -15,7 +16,7 @@ public class ItemDePedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private ItemDePedidoPK id;
+	private ItemDePedidoPK id = new ItemDePedidoPK();
 	
 	private Integer quantidade;
 	private Double preco;
@@ -31,6 +32,7 @@ public class ItemDePedido implements Serializable {
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
