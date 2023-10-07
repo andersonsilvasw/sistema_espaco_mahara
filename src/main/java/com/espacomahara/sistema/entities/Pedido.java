@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.espacomahara.sistema.entities.enums.FormaPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,6 +27,8 @@ public class Pedido implements Serializable {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
+	
+	private Integer formaPagamento;
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
@@ -34,10 +37,11 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Instant data, Usuario cliente) {
+	public Pedido(Long id, Instant data, FormaPagamento formaPagamento, Usuario cliente) {
 		super();
 		this.id = id;
 		this.data = data;
+		setFormaPagamento(formaPagamento);
 		this.cliente = cliente;
 	}
 
@@ -55,6 +59,16 @@ public class Pedido implements Serializable {
 
 	public void setData(Instant data) {
 		this.data = data;
+	}
+	
+	public FormaPagamento getFormaPagamento() {
+		return FormaPagamento.valueOf(formaPagamento);
+	}
+	
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		if (formaPagamento != null) {
+			this.formaPagamento = formaPagamento.getCode();
+		}
 	}
 
 	public Usuario getCliente() {
