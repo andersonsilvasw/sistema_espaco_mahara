@@ -1,12 +1,15 @@
 package com.espacomahara.sistema.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,28 +19,31 @@ public class Usuario implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
+	private Long id;
 	private String nome;
 	private String fone;
 	private String senha;
 	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	public Usuario() {
 	}
 
-	public Usuario(Long codigo, String nome, String fone, String senha) {
+	public Usuario(Long id, String nome, String fone, String senha) {
 		super();
-		this.codigo = codigo;
+		this.id = id;
 		this.nome = nome;
 		this.fone = fone;
 		this.senha = senha;
 	}
 
-	public Long getCodigo() {
-		return codigo;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -64,9 +70,13 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -78,7 +88,7 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(codigo, other.codigo);
+		return Objects.equals(id, other.id);
 	}
 }
 
