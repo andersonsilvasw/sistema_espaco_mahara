@@ -1,12 +1,17 @@
 package com.espacomahara.sistema.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +26,9 @@ public class Produto implements Serializable {
 	private String descricao;
 	private Double preco;
 	private String imgUrl;
+	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemDePedido> itens = new HashSet<>();
 	
 	public Produto() {
 	}
@@ -72,6 +80,15 @@ public class Produto implements Serializable {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+	
+	@JsonIgnore
+	public Set<Pedido> getPedidos() {
+		Set<Pedido> set = new HashSet<>();
+		for (ItemDePedido x : itens) {
+			set.add(x.getPedido());
+		}
+		return set;
 	}
 
 	@Override
