@@ -37,10 +37,12 @@ public class TesteConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Produto pro1 = new Produto(null, "Latte Viuri", "Leave in pré-escova com proteção térmica", 140.00, "");
-		Produto pro2 = new Produto(null, "Monovit Pro A", "Cápsulas para crescimento capilar", 120.00, "");
+		Produto pro1 = new Produto(null, "Latte", "Leave in pré-escova com proteção térmica - Viuri", 140.00, "");
+		Produto pro2 = new Produto(null, "Monovit Pro A", "Cápsulas para crescimento capilar - Âmbar", 120.00, "");
+		Produto pro3 = new Produto(null, "Kit Maria Bonita", "Shampoo e Condionador para crescimento capilar - Toctus", 220.00, "");
+		Produto pro4 = new Produto(null, "Kit Algoterapia", "Shampoo e Condionador - Vegettale", 170.00, "");
 		
-		produtoRepository.saveAll(Arrays.asList(pro1, pro2));
+		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3, pro4));
 		
 		Usuario u1 = new Usuario(null, "Anderson Silva", "988889999", "12345"); 
 		Usuario u2 = new Usuario(null, "Mara Melo", "988888888", "12345"); 
@@ -54,8 +56,11 @@ public class TesteConfig implements CommandLineRunner {
 		
 		ItemDePedido ip1 = new ItemDePedido(ped1, pro2, 2, pro2.getPreco());
 		ItemDePedido ip2 = new ItemDePedido(ped2, pro1, 1, pro1.getPreco());
-		ItemDePedido ip3 = new ItemDePedido(ped3, pro2, 3, pro2.getPreco());
+		ItemDePedido ip3 = new ItemDePedido(ped3, pro2, 2, pro2.getPreco());
+		ItemDePedido ip4 = new ItemDePedido(ped1, pro1, 1, pro1.getPreco());
+		ItemDePedido ip5 = new ItemDePedido(ped2, pro3, 1, pro3.getPreco());
+		ItemDePedido ip6 = new ItemDePedido(ped3, pro3, 1, pro3.getPreco());
 		
-		itemDePedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		itemDePedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3, ip4, ip5, ip6));
 	}
 }
