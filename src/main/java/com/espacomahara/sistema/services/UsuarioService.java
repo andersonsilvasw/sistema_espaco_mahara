@@ -13,6 +13,8 @@ import com.espacomahara.sistema.repositories.UsuarioRepository;
 import com.espacomahara.sistema.services.exceptions.DatabaseException;
 import com.espacomahara.sistema.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UsuarioService {
 	
@@ -43,9 +45,13 @@ public class UsuarioService {
 	}
 	
 	public Usuario update(Long id, Usuario obj) {
-		Usuario entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			Usuario entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(Usuario entity, Usuario obj) {
